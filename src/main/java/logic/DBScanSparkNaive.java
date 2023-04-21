@@ -2,18 +2,11 @@ package logic;
 
 import entity.Cluster;
 import entity.ClusterElement;
-import entity.Metrics;
 import entity.Point;
-import factories.PointFactory;
-import dataUsage.DatasetListMaker;
-import dataUsage.DatasetListMakerStreamImpl;
-import utils.DistanceByChooseMetric;
+import scala.Tuple2;
 import utils.DistanceCalculator;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -74,25 +67,21 @@ public class DBScanSparkNaive implements ClusteringAlgorithm {
                 clusters.add(cluster);
             }
         }
-        printClustersElements(clusters);
     }
 
     @Override
-    public List<ClusterElement> getClusterElements() {
-        return clusters;
-    }
-
-    // #FIXME for debugging only
-    private void printClustersElements(List<ClusterElement> clusters) {
-        for (ClusterElement cluster : clusters) {
-            System.out.println(cluster.getClusterId());
-            for (Point point : cluster.getPoints()) {
-                System.out.println(point.getNameOfRow());
+    public Map<String, Integer> getNameAndClusterId() {
+        Map<String, Integer> markedPoint = new HashMap<>();
+        for(ClusterElement clusterElement : clusters) {
+            int clusterId = clusterElement.getClusterId();
+            for(Point point: clusterElement.getPoints()) {
+                markedPoint.put(point.getNameOfRow(), clusterId);
             }
         }
+        return markedPoint;
     }
-    // This private function provide us to find neighbours points
 
+    // This private function provide us to find neighbours points
     private List<Point> regionQuery(List<Point> points, Point point) {
         return points.stream()
                 .filter(neighbour -> distanceCalculator.getDistance(point, neighbour) <= eps)

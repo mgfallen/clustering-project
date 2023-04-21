@@ -13,7 +13,7 @@ public class Point {
         this.nameOfRow = nameOfRow;
     }
 
-    public Point(){}
+    protected Point(){}
 
     public void setValues(List<Double> values) {
         this.values = values;
@@ -38,5 +38,4 @@ public class Point {
     public void setNoise() {
         isNoise = true;
     }
-
 }

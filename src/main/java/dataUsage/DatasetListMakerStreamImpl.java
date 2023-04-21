@@ -1,7 +1,7 @@
 package dataUsage;
 
 import entity.Point;
-import factories.PointFactory;
+import entity.PointFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 

@@ -5,7 +5,9 @@ import utils.DistanceCalculator;
 import org.jboss.netty.util.internal.ThreadLocalRandom;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class KmeansPP implements ClusteringAlgorithm {
 
@@ -43,11 +45,24 @@ public class KmeansPP implements ClusteringAlgorithm {
             }
             centroids.add(nextCentroid);
         }
-        printClusterElements(getClusterElements());
     }
 
     @Override
-    public List<ClusterElement> getClusterElements() {
+    public Map<String, Integer> getNameAndClusterId() {
+        List<ClusterElement> clusters = getClusterElements();
+
+        Map<String, Integer> markedPoint = new HashMap<>();
+        int numberOfCluster = 0;
+        for(ClusterElement clusterElement : clusters) {
+            int clusterId = numberOfCluster++;
+            for(Point point: clusterElement.getPoints()) {
+                markedPoint.put(point.getNameOfRow(), clusterId);
+            }
+        }
+        return markedPoint;
+    }
+
+    private List<ClusterElement> getClusterElements() {
         List<ClusterElement> clusters = new ArrayList<>();
 
         for (Point centroidPt : centroids) {
@@ -70,16 +85,6 @@ public class KmeansPP implements ClusteringAlgorithm {
             closestCentroid.addPoint(point);
         }
         return clusters;
-    }
-
-    // #FIXME for debugging only
-    private void printClusterElements(List<ClusterElement> centroids) {
-        for (ClusterElement centroid : centroids) {
-            System.out.println("Центр кластера лежит в: " + centroid.getCenter().getNameOfRow());
-            for (Point point : centroid.getPoints()) {
-                System.out.println(point.getNameOfRow());
-            }
-        }
     }
 
     protected static class builder {

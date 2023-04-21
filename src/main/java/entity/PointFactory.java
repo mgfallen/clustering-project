@@ -1,6 +1,4 @@
-package factories;
-
-import entity.Point;
+package entity;
 
 import javax.inject.Singleton;
 

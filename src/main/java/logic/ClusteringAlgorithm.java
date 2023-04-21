@@ -1,10 +1,8 @@
 package logic;
 
-import entity.ClusterElement;
-
-import java.util.List;
+import java.util.Map;
 
 public interface ClusteringAlgorithm {
     void compute();
-    List<ClusterElement> getClusterElements();
+    Map<String, Integer> getNameAndClusterId();
 }

@@ -3,7 +3,7 @@ package logic;
 import dataUsage.DatasetListMaker;
 import dataUsage.DatasetListMakerStreamImpl;
 import entity.Metrics;
-import factories.PointFactory;
+import entity.PointFactory;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import utils.DistanceByChooseMetric;
