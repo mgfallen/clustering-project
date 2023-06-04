@@ -2,3 +2,5 @@ Run this application in 8 Java, because Apache Spark support only this version o
 
 This pet-project produce my hand-maded versions of clustering algorithm like DBScan and KMeans++. 
 The next part of this project should be a comparing part with sklearn models.
+
+For starting this project needs to download hadoop and putting it in this path: C:\java\hadoop
